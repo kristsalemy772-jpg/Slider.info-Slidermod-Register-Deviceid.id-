@@ -220,7 +220,7 @@ Free trial link 1.
 </button>
 
 <span class="temporary-text">
-(GARENA/GLOBAL)
+(COD/G/G)
 </span>
 
 </div>
