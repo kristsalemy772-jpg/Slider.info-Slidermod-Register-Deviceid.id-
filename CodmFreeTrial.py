@@ -807,7 +807,7 @@ def free_process_route():
     if already_accessed:
         conn.close()
         # Haharangin ang user kung naka-isang beses na siya ngayong araw
-        return '<script>alert("Bawal muna lods! Isang beses lang bawat device sa isang araw. Balik ka ulit bukas.");window.location="/free";</script>'
+        return '<script>alert("You have already used your free key for today try again tomorrow");window.location="/free";</script>'
 
     # 4. KUNG FIRST TIME NGAYONG ARAW, I-SAVE ANG IP AT DATE
     try:
