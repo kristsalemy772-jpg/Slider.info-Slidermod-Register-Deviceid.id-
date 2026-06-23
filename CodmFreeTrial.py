@@ -61,8 +61,18 @@ def init_db():
         )
     """)
 
+    # BAGONG TABLE PARA SA IP TRACKING
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS ip_access_logs (
+            ip_address TEXT,
+            access_date TEXT,
+            PRIMARY KEY (ip_address, access_date)
+        )
+    """)
+
     conn.commit()
     conn.close()
+
 # ==========================================
 # USER LANDING TEMPLATE
 # ==========================================
@@ -774,13 +784,48 @@ def free_process_route():
     if not FREE_KEY_ENABLED:
         return '<script>alert("Free Key Locked");window.location="/free";</script>'
 
+    # 1. KUNIN ANG TUNAY NA IP NG USER (Kahit naka-proxy/hosting)
+    if request.headers.getlist("X-Forwarded-For"):
+        user_ip = request.headers.getlist("X-Forwarded-For")[0].split(',')[0].strip()
+    else:
+        user_ip = request.remote_addr
+
+    # 2. KUNIN ANG DATE NGAYON (Format: YYYY-MM-DD)
+    # Gagamit tayo ng time module para makuha ang current date base sa server time
+    current_date = time.strftime("%Y-%m-%d", time.gmtime()) 
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # 3. I-CHECK KUNG NAKAPAG-GENERATE NA ANG IP NA ITO NGAYONG ARAW
+    cursor.execute(
+        "SELECT 1 FROM ip_access_logs WHERE ip_address=%s AND access_date=%s",
+        (user_ip, current_date)
+    )
+    already_accessed = cursor.fetchone()
+
+    if already_accessed:
+        conn.close()
+        # Haharangin ang user kung naka-isang beses na siya ngayong araw
+        return '<script>alert("Bawal muna lods! Isang beses lang bawat device sa isang araw. Balik ka ulit bukas.");window.location="/free";</script>'
+
+    # 4. KUNG FIRST TIME NGAYONG ARAW, I-SAVE ANG IP AT DATE
+    try:
+        cursor.execute(
+            "INSERT INTO ip_access_logs (ip_address, access_date) VALUES (%s, %s)",
+            (user_ip, current_date)
+        )
+    except psycopg2.IntegrityError:
+        # Safety net kung biglang nag-double click ang user ng mabilis
+        conn.rollback()
+        conn.close()
+        return '<script>alert("Masyadong mabilis lods, dahan-dahan lang.");window.location="/free";</script>'
+
+    # 5. IPAGPATULOY ANG DATI MONG LOGIC (Token Generation)
     token = str(uuid.uuid4())
 
     session["free_token"] = token
     session["passed_safelink"] = False
-
-    conn = get_db_connection()
-    cursor = conn.cursor()
 
     cursor.execute(
         "INSERT INTO free_tokens (token, used, created_at) VALUES (%s,%s,%s)",
@@ -790,10 +835,9 @@ def free_process_route():
     conn.commit()
     conn.close()
 
+    # I-redirect na sa iyong GPLinks
     return redirect("https://gplinks.co/Zn066")
-
-
-
+    
 # =========================
 # RETURN ROUTE (OUTSIDE FUNCTION!)
 # =========================
