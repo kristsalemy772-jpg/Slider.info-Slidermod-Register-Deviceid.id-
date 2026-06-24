@@ -836,7 +836,7 @@ def free_process_route():
     conn.close()
 
     # I-redirect na sa iyong GPLinks
-    return redirect("https://gplinks.co/Zn066")
+    return redirect("https://gplinks.co/k2AXw")
     
 # =========================
 # RETURN ROUTE (OUTSIDE FUNCTION!)
