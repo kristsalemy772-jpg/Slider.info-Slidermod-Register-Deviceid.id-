@@ -132,47 +132,44 @@ body{
     color:#5f6368;
 }
 
-/* Saktong alignment at dikit sa isang linya */
+/* Eksaktong alignment, bawal bumaba o maghiwalay */
 .trial-container{
     display:flex;
     align-items:center;
     justify-content:center;
-    gap:4px;
+    gap:4px; /* Sobrang dikit para iwas lagpas screen */
     margin-top:35px;
     flex-wrap:nowrap; 
 }
 
-/* Ang "TAP HERE" box na normal para malinaw basahin */
-.tap-text-box {
+/* Ang Solid Arrow design na pinaliit at siksik */
+.tap-here{
     background:#00a2e8;
     color:white;
-    font-size:10px;
+    font-size:9px; /* Maliit na text para kasya sa loob */
     font-weight:bold;
-    padding:4px 6px;
-    border-radius:3px;
+    padding:4px 12px 4px 6px; /* Tamang space lang para sa dulo ng arrow */
     text-transform:uppercase;
     white-space:nowrap;
+    display:inline-block;
+    
+    /* Gupit na hugis solid na arrow na nakaturo pakanan */
+    clip-path: polygon(0% 20%, 75% 20%, 75% 0%, 100% 50%, 75% 100%, 75% 80%, 0% 80%);
+    
+    /* Tumatalon-talon pakanan nang mabilis */
+    animation: bounceSolidArrow 0.35s infinite alternate;
 }
 
-/* Ang mismong Curved Doodle Arrow na tumatalon at nakaturo sa link */
-.curved-arrow {
-    width: 28px;
-    height: 20px;
-    display: inline-block;
-    /* Masiglang talon pakanan-pakaliwa */
-    animation: bounceCurvedArrow 0.4s infinite alternate;
-}
-
-@keyframes bounceCurvedArrow {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(5px); }
+@keyframes bounceSolidArrow{
+    0%{ transform:translateX(0); }
+    100%{ transform:translateX(5px); } /* Umurot-sulong pakanan */
 }
 
 .trial-link-btn{
     background:none;
     border:none;
     color:#008000;
-    font-size:16px;
+    font-size:16px; /* Swak na laki para sa tabi ng arrow */
     font-weight:bold;
     text-decoration:underline;
     cursor:pointer;
@@ -183,7 +180,7 @@ body{
 
 .temporary-text{
     color:#ff0000;
-    font-size:14px;
+    font-size:14px; /* Pinaliit para swak na swak sa dulo ng linya */
     font-weight:bold;
     white-space:nowrap;
     margin:0;
@@ -239,16 +236,8 @@ style="color:#0088cc;text-decoration:none;font-weight:bold;"
 
 <div class="trial-container">
 
-<!-- Malinis na Text Box -->
-<div class="tap-text-box">TAP HERE</div>
-
-<!-- ANG TUMATALON NA CURVED DOODLE ARROW (Nakaturo Pakanan) -->
-<div class="curved-arrow">
-    <svg viewBox="0 0 24 24" fill="none" stroke="#00a2e8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-        <!-- Ang arko o curve ng katawan ng arrow at ang matulis na dulo -->
-        <path d="M2 17c4-6 10-6 14-3" />
-        <polyline points="12 10 17 14 13 19" />
-    </svg>
+<div class="tap-here">
+TAP HERE
 </div>
 
 <button type="submit" class="trial-link-btn">
@@ -296,9 +285,6 @@ OR avail VIP access 🙂
 </body>
 </html>
 """
-
-
-
 
 # ==========================================
 # ADMIN PANEL TEMPLATE
