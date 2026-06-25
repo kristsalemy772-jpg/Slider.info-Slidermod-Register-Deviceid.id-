@@ -132,7 +132,7 @@ body{
     color:#5f6368;
 }
 
-/* Isang linya at dikit-dikit ang alignment */
+/* Saktong alignment at dikit sa isang linya */
 .trial-container{
     display:flex;
     align-items:center;
@@ -142,33 +142,28 @@ body{
     flex-wrap:nowrap; 
 }
 
-/* Wrapper para sa SVG Arrow na may Text sa loob */
-.tap-here-wrapper {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 75px;  /* Saktong liit para kasya sa isang linya */
-    height: 32px;
-    /* Mas mabilis at nakaka-atensyong talon pakanan */
-    animation: bounceDoodleArrow 0.35s infinite alternate;
+/* Ang "TAP HERE" box na normal para malinaw basahin */
+.tap-text-box {
+    background:#00a2e8;
+    color:white;
+    font-size:10px;
+    font-weight:bold;
+    padding:4px 6px;
+    border-radius:3px;
+    text-transform:uppercase;
+    white-space:nowrap;
 }
 
-/* Ang mismong Text na naka-posisyon sa katawan ng arrow */
-.tap-here-text {
-    position: absolute;
-    color: white;
-    font-size: 8px;
-    font-weight: bold;
-    text-transform: uppercase;
-    white-space: nowrap;
-    left: 8px; /* Iniurong pakaliwa para nasa likod/katawan ng arrow */
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none; /* Hindi istorbo sa click block */
+/* Ang mismong Curved Doodle Arrow na tumatalon at nakaturo sa link */
+.curved-arrow {
+    width: 28px;
+    height: 20px;
+    display: inline-block;
+    /* Masiglang talon pakanan-pakaliwa */
+    animation: bounceCurvedArrow 0.4s infinite alternate;
 }
 
-@keyframes bounceDoodleArrow {
+@keyframes bounceCurvedArrow {
     0% { transform: translateX(0); }
     100% { transform: translateX(5px); }
 }
@@ -244,13 +239,16 @@ style="color:#0088cc;text-decoration:none;font-weight:bold;"
 
 <div class="trial-container">
 
-<!-- BAGONG DOODLE ARROW DESIGN MULA SA SCREENSHOT -->
-<div class="tap-here-wrapper">
-    <svg viewBox="0 0 100 40" fill="#00a2e8" xmlns="http://www.w3.org/2000/svg">
-        <!-- Ang shape na kumokopya sa liko, kurba, at lightning cut sa 189192.jpg ngunit nakaturo pakanan -->
-        <path d="M5,5 C25,3 45,5 55,2 L50,15 L65,12 L58,22 L100,20 L58,18 L65,28 L50,25 L55,38 C45,35 25,37 5,35 Z" />
+<!-- Malinis na Text Box -->
+<div class="tap-text-box">TAP HERE</div>
+
+<!-- ANG TUMATALON NA CURVED DOODLE ARROW (Nakaturo Pakanan) -->
+<div class="curved-arrow">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#00a2e8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+        <!-- Ang arko o curve ng katawan ng arrow at ang matulis na dulo -->
+        <path d="M2 17c4-6 10-6 14-3" />
+        <polyline points="12 10 17 14 13 19" />
     </svg>
-    <div class="tap-here-text">TAP HERE</div>
 </div>
 
 <button type="submit" class="trial-link-btn">
@@ -298,6 +296,7 @@ OR avail VIP access 🙂
 </body>
 </html>
 """
+
 
 
 
