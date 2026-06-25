@@ -132,54 +132,60 @@ body{
     color:#5f6368;
 }
 
+/* Naka-dikit at sakto sa isang linya lahat */
 .trial-container{
     display:flex;
     align-items:center;
-    gap:6px;
+    justify-content:center;
+    gap:4px; /* Pinadikit sa 4px para walang space masyado */
     margin-top:35px;
-    flex-wrap:nowrap; /* Pwersahang magkasama sa isang linya */
+    flex-wrap:nowrap; 
 }
 
-/* Ginawang hugis ARROW mismo ang background box */
+/* Maliit na Arrow Design na may "TAP HERE" sa loob */
 .tap-here{
-    background:#00a2e8;
+    display:inline-flex;
+    align-items:center;
+    justify-content:flex-start;
     color:white;
-    font-size:9px;
+    font-size:9px; /* Pinaliit ang font */
     font-weight:bold;
-    /* Mas mahaba ang padding sa kanan para sa dulo ng arrow */
-    padding:6px 16px 6px 8px; 
+    padding:4px 14px 4px 6px; /* Saktong siksik ang space sa loob */
     text-transform:uppercase;
     white-space:nowrap;
     
-    /* Kinortehan na maging hugis Block Arrow pointing right */
-    clip-path: polygon(0% 20%, 75% 20%, 75% 0%, 100% 50%, 75% 100%, 75% 80%, 0% 80%);
+    /* Eleganteng Korte ng Arrow pointing right (may pasok nang konti sa likod) */
+    clip-path: polygon(0% 0%, 80% 0%, 100% 50%, 80% 100%, 0% 100%, 12% 50%);
+    background:#00a2e8;
     
-    /* Animation na umuusod-talon pakanan-pakaliwa tulad ng arrow */
-    animation: bounceArrow 0.4s infinite alternate;
+    /* Mas mabilis na talon-talon pakanan */
+    animation: bounceArrowMini 0.35s infinite alternate;
 }
 
-@keyframes bounceArrow{
+@keyframes bounceArrowMini{
     0%{ transform:translateX(0); }
-    100%{ transform:translateX(6px); } /* Umuurong-sulong ang arrow */
+    100%{ transform:translateX(4px); } /* Eksaktong 4px lang ang usod para swabe */
 }
 
 .trial-link-btn{
     background:none;
     border:none;
     color:#008000;
-    font-size:18px;
+    font-size:16px; /* Binabaan nang konti para mag-sakto lahat */
     font-weight:bold;
     text-decoration:underline;
     cursor:pointer;
     white-space:nowrap;
     padding:0;
+    margin:0;
 }
 
 .temporary-text{
     color:#ff0000;
-    font-size:16px;
+    font-size:14px; /* Pinaliit para hindi mag-overlap o bumaba */
     font-weight:bold;
     white-space:nowrap;
+    margin:0;
 }
 
 </style>
@@ -282,237 +288,6 @@ OR avail VIP access 🙂
 </html>
 """
 
-
-
-# ==========================================
-# GENERATED KEY TEMPLATE
-# ==========================================
-FREE_GENERATED_TEMPLATE = """
-<!DOCTYPE html>
-<html lang="en">
-<head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Slider Free</title>
-
-<style>
-
-body{
-    background:#000;
-    color:#fff;
-    font-family:sans-serif;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-    margin:0;
-    padding:20px;
-}
-
-.alert-text{
-    color:#d92424;
-    font-size:24px;
-    margin-bottom:45px;
-    text-align:center;
-}
-
-.gen-btn{
-    background:#4caf50;
-    color:#fff;
-    width:100%;
-    max-width:340px;
-    padding:16px;
-    font-size:20px;
-    border:none;
-    border-radius:4px;
-    cursor:pointer;
-}
-
-.key-display{
-    display:none;
-    background:#fff;
-    color:#000;
-    width:100%;
-    max-width:340px;
-    padding:14px;
-    font-size:18px;
-    text-align:center;
-    border-radius:4px;
-    margin-bottom:15px;
-    word-break:break-all;
-    box-sizing:border-box;
-}
-
-.copy-btn{
-    display:none;
-    background:#f39c12;
-    color:#fff;
-    width:100%;
-    max-width:340px;
-    padding:14px;
-    font-size:18px;
-    border:none;
-    border-radius:4px;
-    cursor:pointer;
-    box-sizing:border-box;
-}
-
-.footer-info{
-    margin-top:50px;
-    text-align:center;
-    font-size:15px;
-    color:#b3b3b3;
-}
-
-.validity-days{
-    margin-bottom:25px;
-    color:#fff;
-}
-
-.tg-channel-link{
-    display:block;
-    color:#00ff00;
-    text-decoration:none;
-    margin-top:6px;
-}
-
-</style>
-</head>
-
-<body>
-
-<div class="alert-text">
-Always use latest version.
-</div>
-
-<button class="gen-btn" id="initGenBtn" onclick="showKeyScreen()">
-Generate Key!
-</button>
-
-<div class="key-display" id="keyText">
-{{ key }}
-</div>
-
-<button class="copy-btn" id="realCopyBtn" onclick="copyToClipboard()">
-Copy key
-</button>
-
-<div class="footer-info">
-
-<div class="validity-days">
-Validity: 12 Hour's
-</div>
-
-SUBSCRIBE TO MY CHANNEL TO GET LATEST UPDATES
-
-<a href="https://t.me/KAZELIDERMODS" target="_blank" class="tg-channel-link">
-HTTPS://T.ME/KAZELIDERMODS
-</a>
-
-</div>
-
-<script>
-
-function showKeyScreen(){
-
-    document.getElementById("initGenBtn").style.display = "none";
-    document.getElementById("keyText").style.display = "block";
-    document.getElementById("realCopyBtn").style.display = "block";
-
-}
-
-function copyToClipboard(){
-
-    var key = document.getElementById("keyText").innerText;
-
-    navigator.clipboard.writeText(key);
-
-    alert("Copied Free Key:\\n\\n" + key);
-
-}
-
-</script>
-
-</body>
-</html>
-"""
-
-# ==========================================
-# ADMIN LOGIN TEMPLATE
-# ==========================================
-ADMIN_LOGIN_TEMPLATE = """
-<!DOCTYPE html>
-<html>
-<head>
-
-<title>Admin Login</title>
-
-<style>
-
-body{
-    background:#111;
-    color:white;
-    font-family:sans-serif;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-}
-
-.box{
-    background:#1e1e1e;
-    padding:30px;
-    border-radius:10px;
-    width:300px;
-}
-
-input{
-    width:100%;
-    padding:12px;
-    margin-top:10px;
-    margin-bottom:15px;
-    border:none;
-    border-radius:5px;
-}
-
-button{
-    width:100%;
-    padding:12px;
-    background:#4caf50;
-    border:none;
-    color:white;
-    border-radius:5px;
-    cursor:pointer;
-}
-
-</style>
-
-</head>
-
-<body>
-
-<div class="box">
-
-<h2>Admin Login</h2>
-
-<form method="POST">
-
-<input type="password" name="password" placeholder="Enter Admin Password">
-
-<button type="submit">
-Login
-</button>
-
-</form>
-
-</div>
-
-</body>
-</html>
-"""
 
 # ==========================================
 # ADMIN PANEL TEMPLATE
