@@ -135,40 +135,46 @@ body{
 .trial-container{
     display:flex;
     align-items:center;
-    gap:10px;
+    gap:8px;
     margin-top:35px;
+    flex-wrap:nowrap; /* Pwersahang magkasama sa isang linya */
 }
 
 .tap-here{
     background:#00a2e8;
     color:white;
-    font-size:10px;
+    font-size:11px;
     font-weight:bold;
-    padding:5px 7px;
+    padding:5px 8px;
     border-radius:3px;
     text-transform:uppercase;
-    animation:bounceHorizontal 0.6s infinite alternate;
+    white-space:nowrap;
+    /* Binago sa vertical bounce para tumatalon talaga pataas/pababa */
+    animation:bounceVertical 0.4s infinite alternate;
 }
 
-@keyframes bounceHorizontal{
-    0%{ transform:translateX(0); }
-    100%{ transform:translateX(6px); }
+@keyframes bounceVertical{
+    0%{ transform:translateY(0); }
+    100%{ transform:translateY(-6px); } /* Tumatalon pataas */
 }
 
 .trial-link-btn{
     background:none;
     border:none;
     color:#008000;
-    font-size:19px;
+    font-size:18px;
     font-weight:bold;
     text-decoration:underline;
     cursor:pointer;
+    white-space:nowrap;
+    padding:0;
 }
 
 .temporary-text{
     color:#ff0000;
-    font-size:19px;
+    font-size:16px;
     font-weight:bold;
+    white-space:nowrap;
 }
 
 </style>
@@ -230,7 +236,7 @@ Free trial link 1.
 </button>
 
 <span class="temporary-text">
-(COD•G&G)
+(CODM GARENA / GLOBAL)
 </span>
 
 </div>
@@ -270,6 +276,7 @@ OR avail VIP access 🙂
 </body>
 </html>
 """
+
 
 # ==========================================
 # GENERATED KEY TEMPLATE
