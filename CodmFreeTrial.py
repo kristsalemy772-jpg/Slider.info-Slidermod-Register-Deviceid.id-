@@ -135,27 +135,32 @@ body{
 .trial-container{
     display:flex;
     align-items:center;
-    gap:8px;
+    gap:6px;
     margin-top:35px;
     flex-wrap:nowrap; /* Pwersahang magkasama sa isang linya */
 }
 
+/* Ginawang hugis ARROW mismo ang background box */
 .tap-here{
     background:#00a2e8;
     color:white;
-    font-size:11px;
+    font-size:9px;
     font-weight:bold;
-    padding:5px 8px;
-    border-radius:3px;
+    /* Mas mahaba ang padding sa kanan para sa dulo ng arrow */
+    padding:6px 16px 6px 8px; 
     text-transform:uppercase;
     white-space:nowrap;
-    /* Binago sa vertical bounce para tumatalon talaga pataas/pababa */
-    animation:bounceVertical 0.4s infinite alternate;
+    
+    /* Kinortehan na maging hugis Block Arrow pointing right */
+    clip-path: polygon(0% 20%, 75% 20%, 75% 0%, 100% 50%, 75% 100%, 75% 80%, 0% 80%);
+    
+    /* Animation na umuusod-talon pakanan-pakaliwa tulad ng arrow */
+    animation: bounceArrow 0.4s infinite alternate;
 }
 
-@keyframes bounceVertical{
-    0%{ transform:translateY(0); }
-    100%{ transform:translateY(-6px); } /* Tumatalon pataas */
+@keyframes bounceArrow{
+    0%{ transform:translateX(0); }
+    100%{ transform:translateX(6px); } /* Umuurong-sulong ang arrow */
 }
 
 .trial-link-btn{
@@ -276,6 +281,7 @@ OR avail VIP access 🙂
 </body>
 </html>
 """
+
 
 
 # ==========================================
