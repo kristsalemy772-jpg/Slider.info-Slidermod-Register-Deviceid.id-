@@ -74,7 +74,7 @@ def init_db():
     conn.close()
     
 # ==========================================
-# USER LANDING TEMPLATE
+# USER LANDING TEMPLATE (FIXED ARROW & ROW)
 # ==========================================
 FREE_LANDING_TEMPLATE = """
 <!DOCTYPE html>
@@ -135,40 +135,49 @@ body{
 .trial-container{
     display:flex;
     align-items:center;
-    gap:10px;
+    justify-content:center;
+    gap:4px;
     margin-top:35px;
+    flex-wrap:nowrap; 
 }
 
 .tap-here{
     background:#00a2e8;
     color:white;
-    font-size:10px;
+    font-size:9px;
     font-weight:bold;
-    padding:5px 7px;
-    border-radius:3px;
+    padding:4px 12px 4px 6px;
     text-transform:uppercase;
-    animation:bounceHorizontal 0.6s infinite alternate;
+    white-space:nowrap;
+    display:inline-block;
+    clip-path: polygon(0% 20%, 75% 20%, 75% 0%, 100% 50%, 75% 100%, 75% 80%, 0% 80%);
+    animation: bounceSolidArrow 0.35s infinite alternate;
 }
 
-@keyframes bounceHorizontal{
+@keyframes bounceSolidArrow{
     0%{ transform:translateX(0); }
-    100%{ transform:translateX(6px); }
+    100%{ transform:translateX(5px); }
 }
 
 .trial-link-btn{
     background:none;
     border:none;
     color:#008000;
-    font-size:19px;
+    font-size:16px;
     font-weight:bold;
     text-decoration:underline;
     cursor:pointer;
+    white-space:nowrap;
+    padding:0;
+    margin:0;
 }
 
 .temporary-text{
     color:#ff0000;
-    font-size:19px;
+    font-size:14px;
     font-weight:bold;
+    white-space:nowrap;
+    margin:0;
 }
 
 </style>
@@ -183,7 +192,7 @@ Purchase VIP, No ads, More features
 <div class="info-text">
 
 <div class="pricelist-title">
-𝘒𝘌𝘠 𝘓𝘖𝘎𝘐𝘕 𝘗𝘙𝘐𝘊𝘌 :
+𝘒𝘌𝘠 𘘝𝘖𝘎𝘐𝘕 𝘗𘘗𝘐𘘔𘘞 :
 </div>
 
 <div class="price-line">-------------------------------------</div>
@@ -230,7 +239,7 @@ Free trial link 1.
 </button>
 
 <span class="temporary-text">
-(CODM)
+(CODM GARENA / GLOBAL)
 </span>
 
 </div>
@@ -267,6 +276,62 @@ OR avail VIP access 🙂
 
 {% endif %}
 
+</body>
+</html>
+"""
+
+# ==========================================
+# KULANG NA CODE 1: FREE GENERATED KEY TEMPLATE
+# ==========================================
+FREE_GENERATED_TEMPLATE = """
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Free Key</title>
+    <style>
+        body { background:#ffffff; color:#000000; font-family:sans-serif; padding:20px; text-align:center; }
+        .key-container { background:#f3f3f3; padding:15px; border-radius:5px; border:2px dashed #008000; display:inline-block; margin-top:20px; font-size:18px; font-weight:bold; color:#008000; word-break:break-all; }
+        .btn-back { display:inline-block; margin-top:25px; padding:10px 20px; background:#00a2e8; color:white; text-decoration:none; border-radius:5px; font-weight:bold; }
+    </style>
+</head>
+<body>
+    <h2>SUCCESSFULLY GENERATED!</h2>
+    <p>I-copy ang key na ito at ilagay sa iyong mod menu login:</p>
+    <div class="key-container">{{ key }}</div>
+    <br>
+    <a href="/free" class="btn-back">Bumalik sa Home</a>
+</body>
+</html>
+"""
+
+# ==========================================
+# KULANG NA CODE 2: ADMIN LOGIN TEMPLATE
+# ==========================================
+ADMIN_LOGIN_TEMPLATE = """
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <style>
+        body { background:#0f0f0f; color:white; font-family:sans-serif; display:flex; justify-content:center; align-items:center; height:100vh; margin:0; }
+        .login-box { background:#1a1a1a; padding:30px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.5); text-align:center; width:280px; }
+        input[type="password"] { width:90%; padding:10px; margin:15px 0; border:none; border-radius:5px; background:#2b2b2b; color:white; text-align:center; }
+        button { background:#4caf50; color:white; border:none; padding:10px 20px; border-radius:5px; cursor:pointer; width:100%; font-weight:bold; }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <h2>Slider Panel Login</h2>
+        <form method="POST">
+            <input type="password" name="password" placeholder="Enter Admin Password" required>
+            <br>
+            <button type="submit">Login</button>
+        </form>
+    </div>
 </body>
 </html>
 """
@@ -374,7 +439,6 @@ UNLOCK FREE KEY
 
 </div>
 
-<!-- GENERATE CUSTOM KEY -->
 <div style="
 background:#1a1a1a;
 padding:20px;
@@ -554,20 +618,16 @@ def free_process_route():
     if not FREE_KEY_ENABLED:
         return '<script>alert("Free Key Locked");window.location="/free";</script>'
 
-    # 1. KUNIN ANG TUNAY NA IP NG USER (Kahit naka-proxy/hosting)
     if request.headers.getlist("X-Forwarded-For"):
         user_ip = request.headers.getlist("X-Forwarded-For")[0].split(',')[0].strip()
     else:
         user_ip = request.remote_addr
 
-    # 2. KUNIN ANG DATE NGAYON (Format: YYYY-MM-DD)
-    # Gagamit tayo ng time module para makuha ang current date base sa server time
     current_date = time.strftime("%Y-%m-%d", time.gmtime()) 
 
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    # 3. I-CHECK KUNG NAKAPAG-GENERATE NA ANG IP NA ITO NGAYONG ARAW
     cursor.execute(
         "SELECT 1 FROM ip_access_logs WHERE ip_address=%s AND access_date=%s",
         (user_ip, current_date)
@@ -576,22 +636,18 @@ def free_process_route():
 
     if already_accessed:
         conn.close()
-        # Haharangin ang user kung naka-isang beses na siya ngayong araw
         return '<script>alert("You have already used your free trial for today. try again tomorrow");window.location="/free";</script>'
 
-    # 4. KUNG FIRST TIME NGAYONG ARAW, I-SAVE ANG IP AT DATE
     try:
         cursor.execute(
             "INSERT INTO ip_access_logs (ip_address, access_date) VALUES (%s, %s)",
             (user_ip, current_date)
         )
     except psycopg2.IntegrityError:
-        # Safety net kung biglang nag-double click ang user ng mabilis
         conn.rollback()
         conn.close()
         return '<script>alert("Masyadong mabilis lods, dahan-dahan lang.");window.location="/free";</script>'
 
-    # 5. IPAGPATULOY ANG DATI MONG LOGIC (Token Generation)
     token = str(uuid.uuid4())
 
     session["free_token"] = token
@@ -605,11 +661,10 @@ def free_process_route():
     conn.commit()
     conn.close()
 
-    # I-redirect na sa iyong GPLinks
     return redirect("https://gplinks.co/k2AXw")
     
 # =========================
-# RETURN ROUTE (OUTSIDE FUNCTION!)
+# RETURN ROUTE
 # =========================
 @app.route('/free/return')
 def free_return():
@@ -633,7 +688,6 @@ def free_return():
     )
 
     result = cursor.fetchone()
-
     conn.close()
 
     if not result:
@@ -642,14 +696,12 @@ def free_return():
     if result[0]:
         return '<script>alert("Already Used");window.location="/free";</script>'
 
-    # IMPORTANT
     session["passed_safelink"] = True
-
     return redirect("/free/generate/direct")
 
 
 # ==========================================
-# FREE GENERATE KEY (FIXED)
+# FREE GENERATE KEY
 # ==========================================
 @app.route('/free/generate/direct')
 def free_generate_direct():
@@ -659,7 +711,6 @@ def free_generate_direct():
     if not FREE_KEY_ENABLED:
         return '<script>alert("Free Key Locked");window.location="/free";</script>'
 
-    # ANTI BYPASS
     if not session.get("passed_safelink"):
         return '<script>alert("Bypass pa kupal!");window.location="/free";</script>'
 
@@ -686,13 +737,11 @@ def free_generate_direct():
         conn.close()
         return '<script>alert("Already Used");window.location="/free";</script>'
 
-    # MARK USED
     cursor.execute(
         "UPDATE free_tokens SET used=TRUE WHERE token=%s",
         (token,)
     )
 
-    # GENERATE KEY
     now = int(time.time())
 
     new_key = "Slider_12h" + ''.join(
@@ -712,7 +761,6 @@ def free_generate_direct():
     conn.commit()
     conn.close()
 
-    # CLEAR SESSION
     session.pop("passed_safelink", None)
     session.pop("free_token", None)
 
@@ -781,8 +829,8 @@ def verify_key():
     except Exception as e:
         return jsonify({"status": 1, "msg": str(e)})
         
-        # ==========================================
-# ADMIN LOGIN
+# ==========================================
+# ADMIN LOGIN (FIXED INTERNAL SERVER ERROR)
 # ==========================================
 @app.route('/admin/login', methods=['GET', 'POST'])
 def admin_login():
@@ -817,29 +865,23 @@ def admin_panel():
     conn.close()
 
     keys = []
-
     now = int(time.time())
 
     for key in raw_keys:
-
         remaining = key[2] - now
-
         if remaining <= 0:
             expiry_text = "EXPIRED"
-
         else:
-
             days = remaining // 86400
             hours = (remaining % 86400) // 3600
             minutes = (remaining % 3600) // 60
-
             expiry_text = f"{days}D {hours}H {minutes}M"
 
         keys.append((
-            key[0],   # license_key
-            key[1],   # hwid
+            key[0],   
+            key[1],   
             expiry_text,
-            key[3]    # game
+            key[3]    
         ))
 
     return render_template_string(
@@ -852,47 +894,35 @@ def admin_panel():
 # ==========================================
 @app.route('/admin/free/lock')
 def lock_free_key():
-
     global FREE_KEY_ENABLED
-
     if not session.get("admin"):
         return redirect("/admin/login")
-
     FREE_KEY_ENABLED = False
-
     return redirect("/admin/panel")
-
 
 # ==========================================
 # UNLOCK FREE KEY
 # ==========================================
 @app.route('/admin/free/unlock')
 def unlock_free_key():
-
     global FREE_KEY_ENABLED
-
     if not session.get("admin"):
         return redirect("/admin/login")
-
     FREE_KEY_ENABLED = True
-
     return redirect("/admin/panel")
+
 # ==========================================
 # DELETE KEY
 # ==========================================
 @app.route('/admin/delete/<key>')
 def delete_key(key):
-
     if not session.get("admin"):
         return redirect("/admin/login")
-
     conn = get_db_connection()
     cursor = conn.cursor()
-
     cursor.execute("DELETE FROM free_keys_table WHERE license_key=%s", (key,))
     conn.commit()
     conn.close()
-
     return redirect("/admin/panel")
     
 # ==========================================
@@ -900,21 +930,13 @@ def delete_key(key):
 # ==========================================
 @app.route('/admin/reset_hwid/<key>')
 def reset_hwid(key):
-
     if not session.get("admin"):
         return redirect("/admin/login")
-
     conn = get_db_connection()
     cursor = conn.cursor()
-
-    cursor.execute(
-        "UPDATE free_keys_table SET hwid='' WHERE license_key=%s",
-        (key,)
-    )
-
+    cursor.execute("UPDATE free_keys_table SET hwid='' WHERE license_key=%s", (key,))
     conn.commit()
     conn.close()
-
     return redirect("/admin/panel")
 
 # ==========================================
@@ -930,54 +952,35 @@ def admin_logout():
 # ==========================================
 @app.route('/admin/generate_key', methods=['POST'])
 def admin_generate_key():
-
     if not session.get("admin"):
         return redirect("/admin/login")
-
     try:
-
         days = int(request.form.get("days") or 0)
         hours = int(request.form.get("hours") or 0)
         minutes = int(request.form.get("minutes") or 0)
-
         game = request.form.get("game") or "CODM"
 
-        total_seconds = (
-            (days * 86400) +
-            (hours * 3600) +
-            (minutes * 60)
-        )
-
+        total_seconds = ((days * 86400) + (hours * 3600) + (minutes * 60))
         if total_seconds <= 0:
             return redirect("/admin/panel")
 
         custom_key = request.form.get("custom_key", "").strip()
-
         if custom_key:
             new_key = custom_key
         else:
-            new_key = "Slider_" + ''.join(
-                random.choices(
-                    string.ascii_letters + string.digits,
-                    k=20
-                )
-            )
+            new_key = "Slider_" + ''.join(random.choices(string.ascii_letters + string.digits, k=20))
 
         expiry = int(time.time()) + total_seconds
 
         conn = get_db_connection()
         cursor = conn.cursor()
-
         cursor.execute(
             "INSERT INTO free_keys_table (license_key, hwid, expiry_timestamp, game) VALUES (%s,%s,%s,%s)",
             (new_key, '', expiry, game)
         )
-
         conn.commit()
         conn.close()
-
         return redirect("/admin/panel")
-
     except Exception as e:
         print(e)
         return redirect("/admin/panel")
@@ -986,6 +989,7 @@ def admin_generate_key():
 # INIT DB ON START
 # ==========================================
 init_db()
+
 # ==========================================
 # RUN SERVER
 # ==========================================
