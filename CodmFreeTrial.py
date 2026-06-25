@@ -61,12 +61,12 @@ def init_db():
         )
     """)
 
-    # ✅ DITO MO ILAGAY (correct place)
+    # BAGONG TABLE PARA SA IP TRACKING
     cursor.execute("""
-        CREATE TABLE IF NOT EXISTS daily_device_logs (
-            device_id TEXT,
+        CREATE TABLE IF NOT EXISTS ip_access_logs (
+            ip_address TEXT,
             access_date TEXT,
-            PRIMARY KEY (device_id, access_date)
+            PRIMARY KEY (ip_address, access_date)
         )
     """)
 
@@ -227,7 +227,6 @@ style="color:#0088cc;text-decoration:none;font-weight:bold;"
 {% if free_enabled %}
 
 <form action="/free/process" method="POST">
-    <input type="hidden" name="device_id" id="device_id">
 
 <div class="trial-container">
 
@@ -276,14 +275,6 @@ OR avail VIP access 🙂
 </div>
 
 {% endif %}
-
-<!-- ✅ DEVICE ID SCRIPT (ADDED HERE) -->
-<script>
-document.getElementById("device_id").value =
-    localStorage.getItem("device_id") ||
-    (localStorage.setItem("device_id", crypto.randomUUID()),
-     localStorage.getItem("device_id"));
-</script>
 
 </body>
 </html>
@@ -627,39 +618,36 @@ def free_process_route():
     if not FREE_KEY_ENABLED:
         return '<script>alert("Free Key Locked");window.location="/free";</script>'
 
-    # get device id (IMPORTANT)
-    device_id = request.form.get("device_id", "").strip()
-    if not device_id:
-        return '<script>alert("Missing Device ID");window.location="/free";</script>'
+    if request.headers.getlist("X-Forwarded-For"):
+        user_ip = request.headers.getlist("X-Forwarded-For")[0].split(',')[0].strip()
+    else:
+        user_ip = request.remote_addr
 
-    current_date = time.strftime("%Y-%m-%d", time.gmtime())
+    current_date = time.strftime("%Y-%m-%d", time.gmtime()) 
 
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    # =========================
-    # CHECK IF DEVICE ALREADY USED TODAY
-    # =========================
-    cursor.execute("""
-        SELECT 1 FROM daily_device_logs
-        WHERE device_id=%s AND access_date=%s
-    """, (device_id, current_date))
+    cursor.execute(
+        "SELECT 1 FROM ip_access_logs WHERE ip_address=%s AND access_date=%s",
+        (user_ip, current_date)
+    )
+    already_accessed = cursor.fetchone()
 
-    if cursor.fetchone():
+    if already_accessed:
         conn.close()
-        return '<script>alert("Isang beses lang per device per day!");window.location="/free";</script>'
+        return '<script>alert("You have already used your free trial for today. try again tomorrow");window.location="/free";</script>'
 
-    # =========================
-    # INSERT LOG (MARK AS USED TODAY)
-    # =========================
-    cursor.execute("""
-        INSERT INTO daily_device_logs (device_id, access_date)
-        VALUES (%s, %s)
-    """, (device_id, current_date))
+    try:
+        cursor.execute(
+            "INSERT INTO ip_access_logs (ip_address, access_date) VALUES (%s, %s)",
+            (user_ip, current_date)
+        )
+    except psycopg2.IntegrityError:
+        conn.rollback()
+        conn.close()
+        return '<script>alert("Masyadong mabilis lods, dahan-dahan lang.");window.location="/free";</script>'
 
-    # =========================
-    # CREATE TOKEN (same logic mo)
-    # =========================
     token = str(uuid.uuid4())
 
     session["free_token"] = token
