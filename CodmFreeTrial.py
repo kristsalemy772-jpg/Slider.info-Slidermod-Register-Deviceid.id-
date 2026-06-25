@@ -266,10 +266,9 @@ WALA PANG FREE KEY DITO MAG AVAIL KANA LANG!
 font-size:18px;
 line-height:1.7;
 ">
-Free trial is currently unavailable.<br><br>
-
+Free trial is currently unavailable.<br>
 Please wait for free access to reopen<br>
-OR avail VIP access 🙂
+OR avail ViP access 🙂
 </div>
 
 </div>
