@@ -259,7 +259,7 @@ font-size:28px;
 font-weight:bold;
 margin-bottom:20px;
 ">
-WALA PANG FREE KEY DITO KEY-NG INAMO
+WALA PANG FREE KEY DITO MAG AVAIL KANA LANG!
 </div>
 
 <div style="
