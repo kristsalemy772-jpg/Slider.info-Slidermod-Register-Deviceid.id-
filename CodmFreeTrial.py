@@ -132,46 +132,52 @@ body{
     color:#5f6368;
 }
 
-/* Naka-dikit at sakto sa isang linya lahat */
+/* Isang linya at dikit-dikit ang alignment */
 .trial-container{
     display:flex;
     align-items:center;
     justify-content:center;
-    gap:4px; /* Pinadikit sa 4px para walang space masyado */
+    gap:4px;
     margin-top:35px;
     flex-wrap:nowrap; 
 }
 
-/* Maliit na Arrow Design na may "TAP HERE" sa loob */
-.tap-here{
-    display:inline-flex;
-    align-items:center;
-    justify-content:flex-start;
-    color:white;
-    font-size:9px; /* Pinaliit ang font */
-    font-weight:bold;
-    padding:4px 14px 4px 6px; /* Saktong siksik ang space sa loob */
-    text-transform:uppercase;
-    white-space:nowrap;
-    
-    /* Eleganteng Korte ng Arrow pointing right (may pasok nang konti sa likod) */
-    clip-path: polygon(0% 0%, 80% 0%, 100% 50%, 80% 100%, 0% 100%, 12% 50%);
-    background:#00a2e8;
-    
-    /* Mas mabilis na talon-talon pakanan */
-    animation: bounceArrowMini 0.35s infinite alternate;
+/* Wrapper para sa SVG Arrow na may Text sa loob */
+.tap-here-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 75px;  /* Saktong liit para kasya sa isang linya */
+    height: 32px;
+    /* Mas mabilis at nakaka-atensyong talon pakanan */
+    animation: bounceDoodleArrow 0.35s infinite alternate;
 }
 
-@keyframes bounceArrowMini{
-    0%{ transform:translateX(0); }
-    100%{ transform:translateX(4px); } /* Eksaktong 4px lang ang usod para swabe */
+/* Ang mismong Text na naka-posisyon sa katawan ng arrow */
+.tap-here-text {
+    position: absolute;
+    color: white;
+    font-size: 8px;
+    font-weight: bold;
+    text-transform: uppercase;
+    white-space: nowrap;
+    left: 8px; /* Iniurong pakaliwa para nasa likod/katawan ng arrow */
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none; /* Hindi istorbo sa click block */
+}
+
+@keyframes bounceDoodleArrow {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(5px); }
 }
 
 .trial-link-btn{
     background:none;
     border:none;
     color:#008000;
-    font-size:16px; /* Binabaan nang konti para mag-sakto lahat */
+    font-size:16px;
     font-weight:bold;
     text-decoration:underline;
     cursor:pointer;
@@ -182,7 +188,7 @@ body{
 
 .temporary-text{
     color:#ff0000;
-    font-size:14px; /* Pinaliit para hindi mag-overlap o bumaba */
+    font-size:14px;
     font-weight:bold;
     white-space:nowrap;
     margin:0;
@@ -238,8 +244,13 @@ style="color:#0088cc;text-decoration:none;font-weight:bold;"
 
 <div class="trial-container">
 
-<div class="tap-here">
-TAP HERE
+<!-- BAGONG DOODLE ARROW DESIGN MULA SA SCREENSHOT -->
+<div class="tap-here-wrapper">
+    <svg viewBox="0 0 100 40" fill="#00a2e8" xmlns="http://www.w3.org/2000/svg">
+        <!-- Ang shape na kumokopya sa liko, kurba, at lightning cut sa 189192.jpg ngunit nakaturo pakanan -->
+        <path d="M5,5 C25,3 45,5 55,2 L50,15 L65,12 L58,22 L100,20 L58,18 L65,28 L50,25 L55,38 C45,35 25,37 5,35 Z" />
+    </svg>
+    <div class="tap-here-text">TAP HERE</div>
 </div>
 
 <button type="submit" class="trial-link-btn">
@@ -287,6 +298,7 @@ OR avail VIP access 🙂
 </body>
 </html>
 """
+
 
 
 # ==========================================
