@@ -192,7 +192,7 @@ Purchase VIP, No ads, More features
 <div class="info-text">
 
 <div class="pricelist-title">
-𝘒𝘌𝘠 𘘝𝘖𝘎𝘐𝘕 𝘗𘘗𝘐𘘔𘘞 :
+𝘒𝘌𝘠 𝘓𝘖𝘎𝘐𝘕 𝘗𝘙𝘐𝘊𝘌 :
 </div>
 
 <div class="price-line">-------------------------------------</div>
