@@ -72,7 +72,7 @@ def init_db():
 
     conn.commit()
     conn.close()
-
+    
 # ==========================================
 # USER LANDING TEMPLATE
 # ==========================================
@@ -132,58 +132,43 @@ body{
     color:#5f6368;
 }
 
-/* Eksaktong alignment, bawal bumaba o maghiwalay */
 .trial-container{
     display:flex;
     align-items:center;
-    justify-content:center;
-    gap:4px; /* Sobrang dikit para iwas lagpas screen */
+    gap:10px;
     margin-top:35px;
-    flex-wrap:nowrap; 
 }
 
-/* Ang Solid Arrow design na pinaliit at siksik */
 .tap-here{
     background:#00a2e8;
     color:white;
-    font-size:9px; /* Maliit na text para kasya sa loob */
+    font-size:10px;
     font-weight:bold;
-    padding:4px 12px 4px 6px; /* Tamang space lang para sa dulo ng arrow */
+    padding:5px 7px;
+    border-radius:3px;
     text-transform:uppercase;
-    white-space:nowrap;
-    display:inline-block;
-    
-    /* Gupit na hugis solid na arrow na nakaturo pakanan */
-    clip-path: polygon(0% 20%, 75% 20%, 75% 0%, 100% 50%, 75% 100%, 75% 80%, 0% 80%);
-    
-    /* Tumatalon-talon pakanan nang mabilis */
-    animation: bounceSolidArrow 0.35s infinite alternate;
+    animation:bounceHorizontal 0.6s infinite alternate;
 }
 
-@keyframes bounceSolidArrow{
+@keyframes bounceHorizontal{
     0%{ transform:translateX(0); }
-    100%{ transform:translateX(5px); } /* Umurot-sulong pakanan */
+    100%{ transform:translateX(6px); }
 }
 
 .trial-link-btn{
     background:none;
     border:none;
     color:#008000;
-    font-size:16px; /* Swak na laki para sa tabi ng arrow */
+    font-size:19px;
     font-weight:bold;
     text-decoration:underline;
     cursor:pointer;
-    white-space:nowrap;
-    padding:0;
-    margin:0;
 }
 
 .temporary-text{
     color:#ff0000;
-    font-size:14px; /* Pinaliit para swak na swak sa dulo ng linya */
+    font-size:19px;
     font-weight:bold;
-    white-space:nowrap;
-    margin:0;
 }
 
 </style>
@@ -245,7 +230,7 @@ Free trial link 1.
 </button>
 
 <span class="temporary-text">
-(CODM GARENA / GLOBAL)
+(CODM)
 </span>
 
 </div>
